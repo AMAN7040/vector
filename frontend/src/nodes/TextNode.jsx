@@ -10,7 +10,7 @@ export const TextNode = ({ id, data }) => {
       type: "text",
       name: "text",
       label: "Text",
-      default: "{{input}}",
+      default: "Enter i.e. {{variabe}}",
     },
   ];
 
