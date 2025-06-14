@@ -10,10 +10,16 @@
 import PropTypes from "prop-types";
 import TextField from "./fields/TextField";
 import DropdownField from "./fields/DropdownField";
+import TextAreaField from "./fields/TextAreaField";
+import CheckboxField from "./fields/CheckboxField";
+import NumberField from "./fields/NumberField";
 
 const COMPONENT_MAP = {
   text: TextField,
   dropdown: DropdownField,
+  textarea: TextAreaField,
+  checkbox: CheckboxField,
+  number: NumberField,
 };
 
 const FieldRenderer = ({ fields, data, onChange }) => {
