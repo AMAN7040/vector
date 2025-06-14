@@ -1,29 +1,63 @@
-// LlmNode.js
+//src/nodes/LlmNode.jsx
 
-import { Handle, Position } from "reactflow";
+import React, { useCallback, useState } from "react";
+import PropTypes from "prop-types";
+import BaseNode from "../components/BaseNode";
 
-export const LLMNode = ({ id }) => {
+export const LLMNode = ({ id, data }) => {
+  const fields = [
+    {
+      type: "text",
+      name: "system",
+      label: "System Prompt",
+      default: "",
+    },
+    {
+      type: "text",
+      name: "prompt",
+      label: "User Prompt",
+      default: "",
+    },
+    {
+      type: "dropdown",
+      name: "model",
+      label: "Model",
+      options: ["OpenAI", "Anthropic", "Gemini", "Mistral", "LLaMA"],
+      default: "OpenAI",
+    },
+  ];
+
+  const hydratedData = fields.reduce((acc, field) => {
+    acc[field.name] = data?.[field.name] ?? field.default ?? "";
+    return acc;
+  }, {});
+
+  const [nodeData, setNodeData] = useState(hydratedData);
+
+  const handleChange = useCallback((key, value) => {
+    setNodeData((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
+  const inputHandles = [{ id: `${id}-system` }, { id: `${id}-prompt` }];
+
+  const outputHandles = [{ id: `${id}-response` }];
+
   return (
-    <div style={{ width: 200, height: 80, border: "1px solid black" }}>
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-system`}
-        style={{ top: `${100 / 3}%` }}
-      />
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-prompt`}
-        style={{ top: `${200 / 3}%` }}
-      />
-      <div>
-        <span>LLM</span>
-      </div>
-      <div>
-        <span>This is a LLM.</span>
-      </div>
-      <Handle type="source" position={Position.Right} id={`${id}-response`} />
-    </div>
+    <BaseNode
+      id={id}
+      title="LLM"
+      inputs={inputHandles}
+      outputs={outputHandles}
+      fields={fields}
+      onChange={handleChange}
+      data={nodeData}
+    />
   );
 };
+
+LLMNode.propTypes = {
+  id: PropTypes.string.isRequired,
+  data: PropTypes.object,
+};
+
+export default LLMNode;
