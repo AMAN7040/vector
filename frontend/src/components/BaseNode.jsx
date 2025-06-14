@@ -3,6 +3,7 @@
 import { Handle, Position } from "reactflow";
 import FieldRenderer from "./FieldRenderer";
 import PropTypes from "prop-types";
+import { nodeStyles } from "../styles/nodeTheme";
 
 /*
  * BaseNode is a resuable scaffold for visual pipeline Nodes.
@@ -18,7 +19,7 @@ const BaseNode = ({
   onChange,
 }) => {
   return (
-    <div className="bg-white border-3 border-black shadow-sm rounded-xl px-4 py-3 min-w-[220px] relative">
+    <div className={nodeStyles.container}>
       <h3 className="text-base font-semibold text-indigo-700 mb-3">{title}</h3>
 
       {inputs.map((handle, idx) => (
@@ -27,7 +28,7 @@ const BaseNode = ({
           type="target"
           id={handle.id}
           position={Position.Left}
-          topOffset={{ top: 40 + idx * 24 }}
+          style={{ top: 60 + idx * 24 }}
           className="bg-indigo-500 w-3 h-3 rounded-full"
         />
       ))}
@@ -40,7 +41,7 @@ const BaseNode = ({
           type="source"
           id={handle.id}
           position={Position.Right}
-          topOffset={{ top: 40 + idx * 24 }}
+          style={{ top: 60 + idx * 24 }}
           className="bg-emerald-500 w-3 h-3 rounded-full"
         />
       ))}
