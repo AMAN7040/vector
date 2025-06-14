@@ -1,35 +1,49 @@
-// TextNode.js
+// src/nodes/TextNode.jsx
 
-import { useState } from 'react';
-import { Handle, Position } from 'reactflow';
+import React, { useCallback, useState } from "react";
+import PropTypes from "prop-types";
+import BaseNode from "../components/BaseNode";
 
 export const TextNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || '{{input}}');
+  const fields = [
+    {
+      type: "text",
+      name: "text",
+      label: "Text",
+      default: "{{input}}",
+    },
+  ];
 
-  const handleTextChange = (e) => {
-    setCurrText(e.target.value);
-  };
+  const hydratedData = fields.reduce((acc, field) => {
+    acc[field.name] = data?.[field.name] ?? field.default ?? "";
+    return acc;
+  }, {});
+
+  const [nodeData, setNodeData] = useState(hydratedData);
+
+  const handleChange = useCallback((key, value) => {
+    setNodeData((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
+  const inputHandles = [];
+  const outputHandles = [{ id: `${id}-output` }];
 
   return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
-      <div>
-        <span>Text</span>
-      </div>
-      <div>
-        <label>
-          Text:
-          <input 
-            type="text" 
-            value={currText} 
-            onChange={handleTextChange} 
-          />
-        </label>
-      </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        id={`${id}-output`}
-      />
-    </div>
+    <BaseNode
+      id={id}
+      title="Text"
+      inputs={inputHandles}
+      outputs={outputHandles}
+      fields={fields}
+      onChange={handleChange}
+      data={nodeData}
+    />
   );
-}
+};
+
+TextNode.propTypes = {
+  id: PropTypes.string.isRequired,
+  data: PropTypes.object,
+};
+
+export default TextNode;
