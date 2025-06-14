@@ -1,41 +1,56 @@
-// OutputNode.jsx
+// src/nodes/OutputNode.jsx
 
-import { useState } from "react";
-import { Handle, Position } from "reactflow";
+import React, { useCallback, useState } from "react";
+import PropTypes from "prop-types";
+import BaseNode from "../components/BaseNode";
 
 export const OutputNode = ({ id, data }) => {
-  const [currName, setCurrName] = useState(
-    data?.outputName || id.replace("customOutput-", "output_")
-  );
-  const [outputType, setOutputType] = useState(data.outputType || "Text");
+  const fields = [
+    {
+      type: "text",
+      name: "outputName",
+      label: "Output Name",
+      default: id.replace("customOutput-", "output_"),
+    },
+    {
+      type: "dropdown",
+      name: "outputType",
+      label: "Type",
+      options: ["Text", "Image"],
+      default: "Text",
+    },
+  ];
 
-  const handleNameChange = (e) => {
-    setCurrName(e.target.value);
-  };
+  const hydratedData = fields.reduce((acc, field) => {
+    acc[field.name] = data?.[field.name] ?? field.default ?? "";
+    return acc;
+  }, {});
 
-  const handleTypeChange = (e) => {
-    setOutputType(e.target.value);
-  };
+  const [nodeData, setNodeData] = useState(hydratedData);
+
+  const handleChange = useCallback((key, value) => {
+    setNodeData((prev) => ({ ...prev, [key]: value }));
+  }, []);
+
+  const inputHandles = [{ id: `${id}-value` }];
+  const outputHandles = []; 
 
   return (
-    <div style={{ width: 200, height: 80, border: "1px solid black" }}>
-      <Handle type="target" position={Position.Left} id={`${id}-value`} />
-      <div>
-        <span>Output</span>
-      </div>
-      <div>
-        <label>
-          Name:
-          <input type="text" value={currName} onChange={handleNameChange} />
-        </label>
-        <label>
-          Type:
-          <select value={outputType} onChange={handleTypeChange}>
-            <option value="Text">Text</option>
-            <option value="File">Image</option>
-          </select>
-        </label>
-      </div>
-    </div>
+    <BaseNode
+      id={id}
+      title="Output"
+      inputs={inputHandles}
+      outputs={outputHandles}
+      fields={fields}
+      onChange={handleChange}
+      data={nodeData}
+    />
   );
 };
+
+OutputNode.propTypes = {
+  id: PropTypes.string.isRequired,
+  data: PropTypes.object,
+};
+
+export default OutputNode;
