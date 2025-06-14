@@ -4,7 +4,7 @@ import { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import BaseNode from "../components/BaseNode";
 
-const createNode = ({ type, fields = [], inputs = [], outputs = [] }) => {
+const createNode = ({ title, fields = [], inputs = [], outputs = [] }) => {
   const Node = ({ id, data }) => {
     const hydratedData = fields.reduce((acc, field) => {
       acc[field.name] = data?.[field.name] ?? field.default ?? "";
@@ -20,7 +20,7 @@ const createNode = ({ type, fields = [], inputs = [], outputs = [] }) => {
     return (
       <BaseNode
         id={id}
-        title={type}
+        title={title}
         inputs={inputs.map((i) => ({ id: `${id}-${i}` }))}
         outputs={outputs.map((o) => ({ id: `${id}-${o}` }))}
         fields={fields}
