@@ -12,51 +12,48 @@ import PropTypes from "prop-types";
 const BaseNode = ({
   title,
   inputs = [],
-  output = [],
+  outputs = [],
   fields = [],
-  data = [],
+  data = {},
   onChange,
 }) => {
   return (
-    <div
-      style={{
-        width: 200,
-        height: 80,
-        border: "1px solid black",
-      }}
-    >
-      <h3>{title}</h3>
-      {inputs.map((id, idx) => (
+    <div className="bg-white border-3 border-black shadow-sm rounded-xl px-4 py-3 min-w-[220px] relative">
+      <h3 className="text-base font-semibold text-indigo-700 mb-3">{title}</h3>
+
+      {inputs.map((handle, idx) => (
         <Handle
-          key={id}
-          id={id}
+          key={`${title.toLowerCase()}-${handle.id}-${idx}`}
           type="target"
+          id={handle.id}
           position={Position.Left}
-          style={{ top: 40 + idx * 24 }}
+          topOffset={{ top: 40 + idx * 24 }}
+          className="bg-indigo-500 w-3 h-3 rounded-full"
         />
       ))}
 
       <FieldRenderer fields={fields} data={data} onChange={onChange} />
 
-      {output.map((id, idx) => (
+      {outputs.map((handle, idx) => (
         <Handle
-          key={id}
-          id={id}
+          key={`${title.toLowerCase()}-${handle.id}-${idx}`}
           type="source"
+          id={handle.id}
           position={Position.Right}
-          style={{ top: 40 + idx * 24 }}
+          topOffset={{ top: 40 + idx * 24 }}
+          className="bg-emerald-500 w-3 h-3 rounded-full"
         />
       ))}
     </div>
   );
 };
 
-BaseNode.prototypes = {
+BaseNode.propTypes = {
   title: PropTypes.string.isRequired,
-  inputs: PropTypes.arrayOf(PropTypes.string),
-  outputs: PropTypes.arrayOf(PropTypes.string),
-  data: PropTypes.object,
+  inputs: PropTypes.arrayOf(PropTypes.object),
+  outputs: PropTypes.arrayOf(PropTypes.object),
   fields: PropTypes.array,
+  data: PropTypes.object,
   onChange: PropTypes.func,
 };
 
