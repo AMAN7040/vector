@@ -24,21 +24,36 @@ const BaseNode = ({
       <h3 className={nodeStyles.title}>{title}</h3>
 
       {inputs.map((handle, idx) => (
-        <Handle
-          key={`${title.toLowerCase()}-${handle.id}-${idx}`}
-          type="target"
-          id={handle.id}
-          position={Position.Left}
-          style={{
-            ...getHandleStyle(inputs.length, idx),
-            backgroundColor: nodeStyles.handleColor,
-            border: `1px solid ${nodeStyles.handleBorder}`,
-            width: nodeStyles.handleSize,
-            height: nodeStyles.handleSize,
-            borderRadius: "9999px",
-          }}
-          className={nodeStyles.inputHandle}
-        />
+        <>
+          <Handle
+            key={`handle-${handle.id}-${idx}`}
+            type="target"
+            id={handle.id}
+            position={Position.Left}
+            style={{
+              ...getHandleStyle(inputs.length, idx),
+              backgroundColor: nodeStyles.handleColor,
+              border: `1px solid ${nodeStyles.handleBorder}`,
+              width: nodeStyles.handleSize,
+              height: nodeStyles.handleSize,
+              borderRadius: "9999px",
+            }}
+            className={nodeStyles.inputHandle}
+          />
+          {handle?.label && (
+            <div
+              key={`label-${handle.id}-${idx}`}
+              style={{
+                position: "absolute",
+                left: "-50px",
+                top: `calc(${getHandleStyle(inputs.length, idx).top})`,
+              }}
+              className="text-xs text-gray-600 whitespace-nowrap"
+            >
+              {handle.label}
+            </div>
+          )}
+        </>
       ))}
 
       <FieldRenderer fields={fields} data={data} onChange={onChange} />
