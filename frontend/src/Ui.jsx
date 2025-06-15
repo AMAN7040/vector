@@ -11,6 +11,11 @@ import { LLMNode } from "./nodes/LlmNode";
 import { OutputNode } from "./nodes/OutputNode";
 import { TextNode } from "./nodes/TextNode";
 
+import FileUploaderNode from "./nodes/FileUploaderNode";
+import TimerNode from "./nodes/TimerNode";
+import BooleanLogicNode from "./nodes/BooleanLogicNode";
+import TextAreaNode from "./nodes/TextAreaNode";
+import ApiRequestNode from "./nodes/ApiRequestNode";
 import "reactflow/dist/style.css";
 
 const gridSize = 20;
@@ -20,6 +25,11 @@ const nodeTypes = {
   llm: LLMNode,
   customOutput: OutputNode,
   text: TextNode,
+  fileUpload: FileUploaderNode,
+  timer: TimerNode,
+  boolean: BooleanLogicNode,
+  textArea: TextAreaNode,
+  api: ApiRequestNode,
 };
 
 const selector = (state) => ({
@@ -91,27 +101,30 @@ export const PipelineUI = () => {
   }, []);
 
   return (
-    <>
-      <div ref={reactFlowWrapper} style={{ width: "100wv", height: "70vh" }}>
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
-          onDrop={onDrop}
-          onDragOver={onDragOver}
-          onInit={setReactFlowInstance}
-          nodeTypes={nodeTypes}
-          proOptions={proOptions}
-          snapGrid={[gridSize, gridSize]}
-          connectionLineType="smoothstep"
-        >
-          <Background color="#aaa" gap={gridSize} />
-          <Controls />
-          <MiniMap />
-        </ReactFlow>
-      </div>
-    </>
+    <div ref={reactFlowWrapper} className="relative w-full h-[85vh]">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
+        onInit={setReactFlowInstance}
+        nodeTypes={nodeTypes}
+        proOptions={proOptions}
+        snapToGrid
+        snapGrid={[gridSize, gridSize]}
+        connectionLineType="smoothstep"
+      >
+        <Background color="#aaa" gap={gridSize} size={1.2} />
+        <Controls style={{ height: 120 }} />
+        <MiniMap
+          nodeStrokeColor="#2563eb"
+          nodeColor="#93c5fd"
+          style={{ height: 150, width: 250 }}
+        />
+      </ReactFlow>
+    </div>
   );
 };
