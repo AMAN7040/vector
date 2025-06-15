@@ -116,6 +116,10 @@ export const PipelineUI = () => {
         snapToGrid
         snapGrid={[gridSize, gridSize]}
         connectionLineType="smoothstep"
+        connectionLineStyle={{
+          stroke: "#6B46C1",
+          strokeWidth: 1.5,
+        }}
       >
         <Background color="#aaa" gap={gridSize} size={1.2} />
         <Controls style={{ height: 120 }} />
