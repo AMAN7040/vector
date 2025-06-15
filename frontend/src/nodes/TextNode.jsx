@@ -1,11 +1,13 @@
 // src/nodes/TextNode.jsx
 
 import createNode from "../utils/createNode";
+import { extractVariables } from "../utils/extractVariables";
 
 export const TextNode = createNode({
   type: "text",
   title: "Text",
   inputs: [],
+  dynamicInputs: true,
   outputs: [{ id: "textOutput" }],
   fields: [
     {
@@ -15,6 +17,10 @@ export const TextNode = createNode({
       default: "",
     },
   ],
+  getInputs: (data) => {
+    const vars = extractVariables(data.content || "");
+    return vars.map((v) => ({ id: v }));
+  },
 });
 
 export default TextNode;
