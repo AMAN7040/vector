@@ -13,9 +13,11 @@ import DropdownField from "./fields/DropdownField";
 import TextAreaField from "./fields/TextAreaField";
 import CheckboxField from "./fields/CheckboxField";
 import NumberField from "./fields/NumberField";
+import AutoTextAreaField from "./fields/AutoTextAreaField";
 
 const COMPONENT_MAP = {
   text: TextField,
+  textResize: AutoTextAreaField,
   dropdown: DropdownField,
   textarea: TextAreaField,
   checkbox: CheckboxField,
