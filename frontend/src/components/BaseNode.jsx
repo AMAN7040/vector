@@ -4,6 +4,7 @@ import { Handle, Position } from "reactflow";
 import FieldRenderer from "./FieldRenderer";
 import PropTypes from "prop-types";
 import { nodeStyles } from "../styles/nodeTheme";
+import { getHandleStyle } from "../utils/positionHandles";
 
 /*
  * BaseNode is a resuable scaffold for visual pipeline Nodes.
@@ -20,7 +21,7 @@ const BaseNode = ({
 }) => {
   return (
     <div className={nodeStyles.container}>
-      <h3 className="text-base font-semibold text-indigo-700 mb-3">{title}</h3>
+      <h3 className={nodeStyles.title}>{title}</h3>
 
       {inputs.map((handle, idx) => (
         <Handle
@@ -28,8 +29,15 @@ const BaseNode = ({
           type="target"
           id={handle.id}
           position={Position.Left}
-          style={{ top: 60 + idx * 24 }}
-          className="bg-indigo-500 w-3 h-3 rounded-full"
+          style={{
+            ...getHandleStyle(inputs.length, idx),
+            backgroundColor: nodeStyles.handleColor,
+            border: `1px solid ${nodeStyles.handleBorder}`,
+            width: nodeStyles.handleSize,
+            height: nodeStyles.handleSize,
+            borderRadius: "9999px",
+          }}
+          className={nodeStyles.inputHandle}
         />
       ))}
 
@@ -41,8 +49,15 @@ const BaseNode = ({
           type="source"
           id={handle.id}
           position={Position.Right}
-          style={{ top: 60 + idx * 24 }}
-          className="bg-emerald-500 w-3 h-3 rounded-full"
+          style={{
+            ...getHandleStyle(outputs.length, idx),
+            backgroundColor: nodeStyles.handleColor,
+            border: `1px solid ${nodeStyles.handleBorder}`,
+            width: nodeStyles.handleSize,
+            height: nodeStyles.handleSize,
+            borderRadius: "9999px",
+          }}
+          className={nodeStyles.outputHandle}
         />
       ))}
     </div>
