@@ -4,12 +4,12 @@ import createNode from "../utils/createNode";
 
 export const TextNode = createNode({
   type: "text",
-  title: "Text Area",
+  title: "Text",
   inputs: [],
   outputs: [{ id: "textOutput" }],
   fields: [
     {
-      type: "textarea",
+      type: "textResize",
       name: "content",
       label: "Text Content",
       default: "",
