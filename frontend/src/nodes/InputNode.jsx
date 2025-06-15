@@ -17,7 +17,7 @@ export const InputNode = createNode({
       type: "text",
       name: "inputName",
       label: "Input Name",
-      default: "input_",
+      default: (id) => `input_${id.split("-").pop()}`,
     },
     {
       type: "dropdown",

@@ -15,7 +15,12 @@ const createNode = ({
 }) => {
   const Node = ({ id, data }) => {
     const hydratedData = fields.reduce((acc, field) => {
-      acc[field.name] = data?.[field.name] ?? field.default ?? "";
+      const defaultValue =
+        typeof field.default === "function"
+          ? field.default(id, data)
+          : field.default ?? "";
+
+      acc[field.name] = data?.[field.name] ?? defaultValue;
       return acc;
     }, {});
 

@@ -12,7 +12,7 @@ export const OutputNode = createNode({
       type: "text",
       name: "outputName",
       label: "Output Name",
-      default: "output_",
+      default: (id) => `output_${id.split("-").pop()}`,
     },
     {
       type: "dropdown",
@@ -23,4 +23,3 @@ export const OutputNode = createNode({
     },
   ],
 });
-
