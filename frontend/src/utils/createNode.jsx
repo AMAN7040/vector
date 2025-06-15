@@ -43,7 +43,10 @@ const createNode = ({
               }
         );
       }
-      return inputs.map((i) => ({ id: `${id}-${i}` }));
+      return inputs.map((i) => ({
+        id: `${id}-${i.id}`,
+        label: i.label ?? i.id,
+      }));
     }, [nodeData, dynamicInputs, getInputs, id, inputs]);
 
     useEffect(() => {
