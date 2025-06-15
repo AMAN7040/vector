@@ -106,8 +106,7 @@ bash
 Copy
 Edit
 cd backend
-pip install -r requirements.txt
-uvicorn main:app --reload
+python3 -m uvicorn main:app --reload
 Ensure the backend is running on http://localhost:8000
 
 🧠 Smart Utilities
