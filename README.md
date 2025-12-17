@@ -1,8 +1,4 @@
-# Visual Pipeline Builder – VectorShift Frontend Technical Assessment
-
-An extensible and interactive node-based visual pipeline editor built for the **VectorShift Frontend Technical Assessment**, featuring reusable architecture, live validation, smart text logic, and backend integration.
-
----
+# Visual Pipeline Builder
 
 ## 🧭 Overview
 
